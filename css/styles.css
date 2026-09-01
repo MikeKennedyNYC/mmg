@@ -260,8 +260,18 @@ a {
   text-align: center;
   color: var(--text-muted);
   font-size: clamp(0.72rem, 2.6vw, 0.95rem);
-  margin: 0 0 clamp(20px, 5vw, 40px);
+  margin: 0 0 8px;
   letter-spacing: 0.04em;
+}
+
+.section-hint {
+  text-align: center;
+  color: var(--copper-light);
+  font-size: clamp(0.6rem, 2.1vw, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 clamp(20px, 5vw, 40px);
+  opacity: 0.85;
 }
 
 .service-grid {
@@ -282,22 +292,79 @@ a {
   }
 }
 
+/* Flip cards */
+
 .service-card {
+  perspective: 1200px;
+  min-height: clamp(190px, 46vw, 215px);
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+@media (min-width: 640px) {
+  .service-card {
+    min-height: clamp(200px, 24vw, 225px);
+  }
+}
+
+@media (min-width: 980px) {
+  .service-card {
+    min-height: 235px;
+  }
+}
+
+.service-card:focus-visible {
+  outline: 2px solid var(--copper-light);
+  outline-offset: 3px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.service-card.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.service-card:hover .card-inner {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: clamp(14px, 3.4vw, 20px) clamp(10px, 3vw, 16px);
   text-align: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-.service-card svg {
+.card-back {
+  transform: rotateY(180deg);
+  border-color: var(--copper-dark);
+  background: var(--black-soft);
+}
+
+.card-face svg {
   width: clamp(26px, 6vw, 34px);
   height: clamp(26px, 6vw, 34px);
   color: var(--copper-light);
   margin: 0 auto 10px;
+  flex-shrink: 0;
 }
 
-.service-card h3 {
+.card-face h3 {
   font-family: var(--font-head);
   text-transform: uppercase;
   font-weight: 500;
@@ -307,11 +374,26 @@ a {
   color: var(--silver);
 }
 
-.service-card p {
+.card-face p {
   margin: 0;
   font-size: clamp(0.66rem, 2.3vw, 0.82rem);
   color: var(--text-muted);
   line-height: 1.4;
+}
+
+.flip-hint {
+  margin-top: 10px;
+  font-size: clamp(0.56rem, 2vw, 0.65rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--copper-light);
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-inner {
+    transition: none;
+  }
 }
 
 /* ---------- Trust bar ---------- */
